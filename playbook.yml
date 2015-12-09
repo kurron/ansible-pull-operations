@@ -14,7 +14,7 @@
     terraform_version: 0.6.8
   tasks:
       - name: Download Terraform
-        get_url: url=https://dl.bintray.com/mitchellh/terraform/terraform_{{ terraform_version }}_linux_amd64.zip dest=/root/terraform.zip mode=444
+        get_url: url=https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip dest=/root/terraform.zip mode=444
       - name: Unpack Terraform
         unarchive: src=/root/terraform.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/terraform
 
