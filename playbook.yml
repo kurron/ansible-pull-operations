@@ -19,7 +19,7 @@
         unarchive: src=/root/terraform.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/terraform
 
 - name: Packer
-  hosts: Ubuntu
+  hosts: nobody
   sudo: True
   vars:
     packer_version: 0.8.6
@@ -42,6 +42,17 @@
   tasks:
       - name: Download CLI
         get_url: url=https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest dest=/usr/local/bin/ecs-cli mode=555
+
+- name: Install Tool Containers
+  hosts: Ubuntu
+  sudo: False
+  tasks:
+      - name: Checkout Packer Container
+        git: repo=https://github.com/kurron/docker-packer.git dest=/home/vagrant/GitHub/docker-packer
+      - name: Soft link Packer Container
+        file: src=/home/vagrant/GitHub/docker-packer/packer.sh path=/home/vagrant/bin/packer state=link
+      - name: Set permissions on the home directory
+        file: path=/home/vagrant owner=vagrant group=vagrant recurse=true state=directory
 
 - name: Install Sysdig
   hosts: Ubuntu
