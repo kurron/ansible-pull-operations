@@ -51,6 +51,10 @@
         git: repo=https://github.com/kurron/docker-packer.git dest=/home/vagrant/GitHub/docker-packer
       - name: Soft link Packer Container
         file: src=/home/vagrant/GitHub/docker-packer/packer.sh path=/home/vagrant/bin/packer state=link
+      - name: Checkout AWS CLI Container
+        git: repo=https://github.com/kurron/docker-aws-cli.git dest=/home/vagrant/GitHub/docker-aws-cli
+      - name: Soft link AWS CLI Container
+        file: src=/home/vagrant/GitHub/docker-aws-cli/aws.sh path=/home/vagrant/bin/aws state=link
       - name: Set permissions on the home directory
         file: path=/home/vagrant owner=vagrant group=vagrant recurse=true state=directory
 
