@@ -30,14 +30,14 @@
         unarchive: src=/root/packer.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/packer
 
 - name: AWS CLI
-  hosts: Ubuntu
+  hosts: nobody
   sudo: True
   tasks:
       - name: AWS CLI
         command: pip install --upgrade awscli
 
 - name: AWS ECS CLI
-  hosts: Ubuntu
+  hosts: nobody
   sudo: True
   tasks:
       - name: Download CLI
@@ -55,6 +55,10 @@
         git: repo=https://github.com/kurron/docker-aws-cli.git dest=/home/vagrant/GitHub/docker-aws-cli
       - name: Soft link AWS CLI Container
         file: src=/home/vagrant/GitHub/docker-aws-cli/aws.sh path=/home/vagrant/bin/aws state=link
+      - name: Checkout AWS ECS CLI Container
+        git: repo=https://github.com/kurron/docker-aws-ecs-cli.git dest=/home/vagrant/GitHub/docker-aws-ecs-cli
+      - name: Soft link AWS ECS CLI Container
+        file: src=/home/vagrant/GitHub/docker-aws-ecs-cli/ecs.sh path=/home/vagrant/bin/ecs state=link
       - name: Set permissions on the home directory
         file: path=/home/vagrant owner=vagrant group=vagrant recurse=true state=directory
 
