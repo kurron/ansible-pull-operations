@@ -58,7 +58,7 @@
       - name: Checkout AWS ECS CLI Container
         git: repo=https://github.com/kurron/docker-aws-ecs-cli.git dest=/home/vagrant/GitHub/docker-aws-ecs-cli
       - name: Soft link AWS ECS CLI Container
-        file: src=/home/vagrant/GitHub/docker-aws-ecs-cli/ecs.sh path=/home/vagrant/bin/ecs state=link
+        file: src=/home/vagrant/GitHub/docker-aws-ecs-cli/ecs.sh path=/home/vagrant/bin/ecs-cli state=link
       - name: Checkout Terraform Container
         git: repo=https://github.com/kurron/docker-terraform.git dest=/home/vagrant/GitHub/docker-terraform
       - name: Soft link Terraform Container
