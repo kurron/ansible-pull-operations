@@ -63,6 +63,10 @@
         git: repo=https://github.com/kurron/docker-terraform.git dest=/home/vagrant/GitHub/docker-terraform
       - name: Soft link Terraform Container
         file: src=/home/vagrant/GitHub/docker-terraform/terraform.sh path=/home/vagrant/bin/terraform state=link
+      - name: Checkout Vault Container
+        git: repo=https://github.com/kurron/docker-vault.git dest=/home/vagrant/GitHub/docker-vault
+      - name: Soft link Vault Container
+        file: src=/home/vagrant/GitHub/docker-vault/vault.sh path=/home/vagrant/bin/vault state=link
       - name: Set permissions on the home directory
         file: path=/home/vagrant owner=vagrant group=vagrant recurse=true state=directory
 
