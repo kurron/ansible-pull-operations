@@ -7,6 +7,17 @@
     - name: create groups based on distribution
       group_by: key={{ ansible_distribution }}
 
+- name: Nomad
+  hosts: Ubuntu
+  sudo: True
+  vars:
+    nomad_version: 0.2.3
+  tasks:
+      - name: Download Nomad
+        get_url: url=https://releases.hashicorp.com/nomad/{{ nomad_version }}/nomad_{{ nomad_version }}_linux_amd64.zip dest=/root/nomad.zip mode=444
+      - name: Unpack Nomad
+        unarchive: src=/root/nomad.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/nomad
+
 - name: Terraform
   hosts: nobody
   sudo: True
