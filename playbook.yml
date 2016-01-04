@@ -29,6 +29,17 @@
       - name: Unpack Consul
         unarchive: src=/root/consul.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/consul
 
+- name: Otto
+  hosts: Ubuntu
+  sudo: True
+  vars:
+    otto_version: 0.1.2
+  tasks:
+      - name: Download Otto
+        get_url: url=https://releases.hashicorp.com/otto/{{ otto_version }}/otto_{{ otto_version }}_linux_amd64.zip dest=/root/otto.zip mode=444
+      - name: Unpack Otto
+        unarchive: src=/root/otto.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/otto
+
 - name: Terraform
   hosts: nobody
   sudo: True
