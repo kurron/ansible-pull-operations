@@ -18,6 +18,17 @@
       - name: Unpack Nomad
         unarchive: src=/root/nomad.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/nomad
 
+- name: Consul
+  hosts: Ubuntu
+  sudo: True
+  vars:
+    consul_version: 0.6.0
+  tasks:
+      - name: Download Consul
+        get_url: url=https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_amd64.zip dest=/root/consul.zip mode=444
+      - name: Unpack Consul
+        unarchive: src=/root/consul.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/consul
+
 - name: Terraform
   hosts: nobody
   sudo: True
