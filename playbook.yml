@@ -104,6 +104,10 @@
         git: repo=https://github.com/kurron/docker-nomad.git dest=/home/vagrant/GitHub/docker-nomad
       - name: Soft link Nomad Container
         file: src=/home/vagrant/GitHub/docker-nomad/nomad.sh path=/home/vagrant/bin/nomad state=link
+      - name: Checkout Consul Container
+        git: repo=https://github.com/kurron/docker-consul.git dest=/home/vagrant/GitHub/docker-consul
+      - name: Soft link Consul Container
+        file: src=/home/vagrant/GitHub/docker-consul/consul.sh path=/home/vagrant/bin/consul state=link
       - name: Set permissions on the home directory
         file: path=/home/vagrant owner=vagrant group=vagrant recurse=true state=directory
 
