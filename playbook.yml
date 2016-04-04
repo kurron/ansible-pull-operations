@@ -9,7 +9,7 @@
 
 - name: Nomad
   hosts: Ubuntu
-  sudo: True
+  become: True
   vars:
     nomad_version: 0.2.3
   tasks:
@@ -20,7 +20,7 @@
 
 - name: Consul
   hosts: Ubuntu
-  sudo: True
+  become: True
   vars:
     consul_version: 0.6.0
   tasks:
@@ -31,7 +31,7 @@
 
 - name: Otto
   hosts: Ubuntu
-  sudo: True
+  become: True
   vars:
     otto_version: 0.1.2
   tasks:
@@ -42,7 +42,7 @@
 
 - name: Terraform
   hosts: nobody
-  sudo: True
+  become: True
   vars:
     terraform_version: 0.6.8
   tasks:
@@ -53,7 +53,7 @@
 
 - name: Packer
   hosts: nobody
-  sudo: True
+  become: True
   vars:
     packer_version: 0.8.6
   tasks:
@@ -64,21 +64,21 @@
 
 - name: AWS CLI
   hosts: nobody
-  sudo: True
+  become: True
   tasks:
       - name: AWS CLI
         command: pip install --upgrade awscli
 
 - name: AWS ECS CLI
   hosts: nobody
-  sudo: True
+  become: True
   tasks:
       - name: Download CLI
         get_url: url=https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest dest=/usr/local/bin/ecs-cli mode=555
 
 - name: Install Tool Containers
   hosts: Ubuntu
-  sudo: False
+  become: False
   tasks:
       - name: Checkout Packer Container
         git: repo=https://github.com/kurron/docker-packer.git dest=/home/vagrant/GitHub/docker-packer
@@ -108,16 +108,16 @@
         git: repo=https://github.com/kurron/docker-consul.git dest=/home/vagrant/GitHub/docker-consul
       - name: Soft link Consul Container
         file: src=/home/vagrant/GitHub/docker-consul/consul.sh path=/home/vagrant/bin/consul state=link
-#     - name: Checkout Consul Template Container
-#       git: repo=https://github.com/kurron/docker-consul-template.git dest=/home/vagrant/GitHub/docker-consul-template
-#     - name: Soft link Consul Template Container
-#       file: src=/home/vagrant/GitHub/docker-consul-template/consul-template.sh path=/home/vagrant/bin/consul-template state=link
+      - name: Checkout Consul Template Container
+        git: repo=https://github.com/kurron/docker-consul-template.git dest=/home/vagrant/GitHub/docker-consul-template
+      - name: Soft link Consul Template Container
+        file: src=/home/vagrant/GitHub/docker-consul-template/consul-template.sh path=/home/vagrant/bin/consul-template state=link
       - name: Checkout Consul Replicate Container
-        git: https://github.com/kurron/docker-consul-replicate.git dest=/home/vagrant/GitHub/docker-consul-replicate
+        git: repo=https://github.com/kurron/docker-consul-replicate.git dest=/home/vagrant/GitHub/docker-consul-replicate
       - name: Soft link Consul Replicate Container
         file: src=/home/vagrant/GitHub/docker-consul-replicate/consul-replicate.sh path=/home/vagrant/bin/consul-replicate state=link
       - name: Checkout Vault SSH Helpeer Container
-        git: https://github.com/kurron/docker-vault-ssh-helper.git dest=/home/vagrant/GitHub/vault-ssh-helper
+        git: repo=ettps://github.com/kurron/docker-vault-ssh-helper.git dest=/home/vagrant/GitHub/vault-ssh-helper
       - name: Soft link Vault SSH Helper Container
         file: src=/home/vagrant/GitHub/vault-ssh-helper/vault-ssh-helper.sh path=/home/vagrant/bin/vault-ssh-helper state=link
       - name: Set permissions on the home directory
@@ -125,7 +125,7 @@
 
 - name: Install Sysdig
   hosts: Ubuntu
-  sudo: True
+  become: True
   tasks:
       - name: Download the signing key
         apt_key: url=https://s3.amazonaws.com/download.draios.com/DRAIOS-GPG-KEY.public state=present
