@@ -108,18 +108,18 @@
         git: repo=https://github.com/kurron/docker-consul.git dest=/home/vagrant/GitHub/docker-consul
       - name: Soft link Consul Container
         file: src=/home/vagrant/GitHub/docker-consul/consul.sh path=/home/vagrant/bin/consul state=link
-      - name: Checkout Consul Template Container
-        git: repo=https://github.com/kurron/docker-consul-template.git dest=/home/vagrant/GitHub/docker-consul-template
-      - name: Soft link Consul Template Container
-        file: src=/home/vagrant/GitHub/docker-consul-template/consul-template.sh path=/home/vagrant/bin/consul-template state=link
-      - name: Checkout Consul Replicate Container
-        git: https://github.com/kurron/docker-consul-replicate.git dest=/home/vagrant/GitHub/docker-consul-replicate
-      - name: Soft link Consul Replicate Container
-        file: src=/home/vagrant/GitHub/docker-consul-replicate/consul-replicate.sh path=/home/vagrant/bin/consul-replicate state=link
-      - name: Checkout Vault SSH Helpeer Container
-        git: https://github.com/kurron/docker-vault-ssh-helper.git dest=/home/vagrant/GitHub/vault-ssh-helper
-      - name: Soft link Vault SSH Helper Container
-        file: src=/home/vagrant/GitHub/vault-ssh-helper/vault-ssh-helper.sh path=/home/vagrant/bin/vault-ssh-helper state=link
+#     - name: Checkout Consul Template Container
+#       git: repo=https://github.com/kurron/docker-consul-template.git dest=/home/vagrant/GitHub/docker-consul-template
+#     - name: Soft link Consul Template Container
+#       file: src=/home/vagrant/GitHub/docker-consul-template/consul-template.sh path=/home/vagrant/bin/consul-template state=link
+#     - name: Checkout Consul Replicate Container
+#       git: https://github.com/kurron/docker-consul-replicate.git dest=/home/vagrant/GitHub/docker-consul-replicate
+#     - name: Soft link Consul Replicate Container
+#       file: src=/home/vagrant/GitHub/docker-consul-replicate/consul-replicate.sh path=/home/vagrant/bin/consul-replicate state=link
+#     - name: Checkout Vault SSH Helpeer Container
+#       git: https://github.com/kurron/docker-vault-ssh-helper.git dest=/home/vagrant/GitHub/vault-ssh-helper
+#     - name: Soft link Vault SSH Helper Container
+#       file: src=/home/vagrant/GitHub/vault-ssh-helper/vault-ssh-helper.sh path=/home/vagrant/bin/vault-ssh-helper state=link
       - name: Set permissions on the home directory
         file: path=/home/vagrant owner=vagrant group=vagrant recurse=true state=directory
 
