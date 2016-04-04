@@ -108,10 +108,10 @@
         git: repo=https://github.com/kurron/docker-consul.git dest=/home/vagrant/GitHub/docker-consul
       - name: Soft link Consul Container
         file: src=/home/vagrant/GitHub/docker-consul/consul.sh path=/home/vagrant/bin/consul state=link
-      - name: Checkout Consul Template Container
-        git: repo=https://github.com/kurron/docker-consul-template.git dest=/home/vagrant/GitHub/docker-consul-template
-      - name: Soft link Consul Template Container
-        file: src=/home/vagrant/GitHub/docker-consul-template/consul-template.sh path=/home/vagrant/bin/consul-template state=link
+#     - name: Checkout Consul Template Container
+#       git: repo=https://github.com/kurron/docker-consul-template.git dest=/home/vagrant/GitHub/docker-consul-template
+#     - name: Soft link Consul Template Container
+#       file: src=/home/vagrant/GitHub/docker-consul-template/consul-template.sh path=/home/vagrant/bin/consul-template state=link
       - name: Checkout Consul Replicate Container
         git: https://github.com/kurron/docker-consul-replicate.git dest=/home/vagrant/GitHub/docker-consul-replicate
       - name: Soft link Consul Replicate Container
