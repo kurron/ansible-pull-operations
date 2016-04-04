@@ -117,7 +117,7 @@
       - name: Soft link Consul Replicate Container
         file: src=/home/vagrant/GitHub/docker-consul-replicate/consul-replicate.sh path=/home/vagrant/bin/consul-replicate state=link
       - name: Checkout Vault SSH Helpeer Container
-        git: repo=ettps://github.com/kurron/docker-vault-ssh-helper.git dest=/home/vagrant/GitHub/vault-ssh-helper
+        git: repo=https://github.com/kurron/docker-vault-ssh-helper.git dest=/home/vagrant/GitHub/vault-ssh-helper
       - name: Soft link Vault SSH Helper Container
         file: src=/home/vagrant/GitHub/vault-ssh-helper/vault-ssh-helper.sh path=/home/vagrant/bin/vault-ssh-helper state=link
       - name: Set permissions on the home directory
