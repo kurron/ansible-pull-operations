@@ -67,6 +67,7 @@
   hosts: Ubuntu
   become: False
   tasks:
+      - file: path=/home/vagrant/GitHub owner=vagrant group=vagrant state=directory mode=755
       - git: repo=https://github.com/kurron/docker-packer.git dest=/home/vagrant/GitHub/docker-packer
       - file: src=/home/vagrant/GitHub/docker-packer/packer.sh path=/home/vagrant/bin/packer state=link
       - git: repo=https://github.com/kurron/docker-aws-cli.git dest=/home/vagrant/GitHub/docker-aws-cli
