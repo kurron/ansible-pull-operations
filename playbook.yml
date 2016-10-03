@@ -48,7 +48,7 @@
   vars:
     packer_version: 0.10.2
   tasks:
-      - get_url: url=https://dl.bintray.com/mitchellh/packer/packer_{{ packer_version }}_linux_amd64.zip dest=/root/packer.zip mode=444
+      - get_url: url=https://releases.hashicorp.com/packer/{{ packer_version }}/packer_{{ packer_version }}_linux_amd64.zip dest=/root/packer.zip mode=444
       - unarchive: src=/root/packer.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/packer
 
 - name: AWS CLI
