@@ -10,7 +10,7 @@
   hosts: Ubuntu
   become: True
   vars:
-    nomad_version: 0.4.0
+    nomad_version: 0.4.1
   tasks:
       - get_url: url=https://releases.hashicorp.com/nomad/{{ nomad_version }}/nomad_{{ nomad_version }}_linux_amd64.zip dest=/root/nomad.zip mode=444
       - unarchive: src=/root/nomad.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/nomad
@@ -19,13 +19,13 @@
   hosts: Ubuntu
   become: True
   vars:
-    consul_version: 0.6.4
+    consul_version: 0.7.0
   tasks:
       - get_url: url=https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_amd64.zip dest=/root/consul.zip mode=444
       - unarchive: src=/root/consul.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/consul
 
 - name: Otto
-  hosts: Ubuntu
+  hosts: Nobody
   become: True
   vars:
     otto_version: 0.2.0
@@ -34,19 +34,19 @@
       - unarchive: src=/root/otto.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/otto
 
 - name: Terraform
-  hosts: nobody
+  hosts: Ubuntu
   become: True
   vars:
-    terraform_version: 0.6.16
+    terraform_version: 0.7.4
   tasks:
       - get_url: url=https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip dest=/root/terraform.zip mode=444
       - unarchive: src=/root/terraform.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/terraform
 
 - name: Packer
-  hosts: nobody
+  hosts: Ubuntu
   become: True
   vars:
-    packer_version: 0.10.1
+    packer_version: 0.10.2
   tasks:
       - get_url: url=https://dl.bintray.com/mitchellh/packer/packer_{{ packer_version }}_linux_amd64.zip dest=/root/packer.zip mode=444
       - unarchive: src=/root/packer.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/packer
@@ -69,26 +69,37 @@
   tasks:
       - file: path=/home/vagrant/GitHub owner=vagrant group=vagrant state=directory mode=755
       - file: path=/home/vagrant/bin owner=vagrant group=vagrant state=directory mode=755
+
       - git: repo=https://github.com/kurron/docker-packer.git dest=/home/vagrant/GitHub/docker-packer
-      - file: src=/home/vagrant/GitHub/docker-packer/packer.sh path=/home/vagrant/bin/packer state=link
+      - file: src=/home/vagrant/GitHub/docker-packer/packer.sh path=/home/vagrant/bin/packer state=absent
+
       - git: repo=https://github.com/kurron/docker-aws-cli.git dest=/home/vagrant/GitHub/docker-aws-cli
       - file: src=/home/vagrant/GitHub/docker-aws-cli/aws.sh path=/home/vagrant/bin/aws state=link
+
       - git: repo=https://github.com/kurron/docker-aws-ecs-cli.git dest=/home/vagrant/GitHub/docker-aws-ecs-cli
       - file: src=/home/vagrant/GitHub/docker-aws-ecs-cli/ecs.sh path=/home/vagrant/bin/ecs-cli state=link
+
       - git: repo=https://github.com/kurron/docker-terraform.git dest=/home/vagrant/GitHub/docker-terraform
-      - file: src=/home/vagrant/GitHub/docker-terraform/terraform.sh path=/home/vagrant/bin/terraform state=link
+      - file: src=/home/vagrant/GitHub/docker-terraform/terraform.sh path=/home/vagrant/bin/terraform state=absent
+
       - git: repo=https://github.com/kurron/docker-vault.git dest=/home/vagrant/GitHub/docker-vault
       - file: src=/home/vagrant/GitHub/docker-vault/vault.sh path=/home/vagrant/bin/vault state=link
+
       - git: repo=https://github.com/kurron/docker-nomad.git dest=/home/vagrant/GitHub/docker-nomad
-      - file: src=/home/vagrant/GitHub/docker-nomad/nomad.sh path=/home/vagrant/bin/nomad state=link
+      - file: src=/home/vagrant/GitHub/docker-nomad/nomad.sh path=/home/vagrant/bin/nomad state=absent
+
       - git: repo=https://github.com/kurron/docker-consul.git dest=/home/vagrant/GitHub/docker-consul
       - file: src=/home/vagrant/GitHub/docker-consul/consul.sh path=/home/vagrant/bin/consul state=link
+
       - git: repo=https://github.com/kurron/docker-consul-template.git dest=/home/vagrant/GitHub/docker-consul-template
       - file: src=/home/vagrant/GitHub/docker-consul-template/consul-template.sh path=/home/vagrant/bin/consul-template state=link
+
       - git: repo=https://github.com/kurron/docker-consul-replicate.git dest=/home/vagrant/GitHub/docker-consul-replicate
       - file: src=/home/vagrant/GitHub/docker-consul-replicate/consul-replicate.sh path=/home/vagrant/bin/consul-replicate state=link
+
       - git: repo=https://github.com/kurron/docker-vault-ssh-helper.git dest=/home/vagrant/GitHub/vault-ssh-helper
       - file: src=/home/vagrant/GitHub/vault-ssh-helper/vault-ssh-helper.sh path=/home/vagrant/bin/vault-ssh-helper state=link
+
       - file: path=/home/vagrant owner=vagrant group=vagrant recurse=true state=directory
 
 - name: Install Sysdig
