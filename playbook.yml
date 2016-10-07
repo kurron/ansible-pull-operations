@@ -82,7 +82,7 @@
   vars:
     version: 0.1.2
   tasks:
-      - get_url: url=https://releases.hashicorp.com/vault-ssh-heler/{{ version }}/vault-ssh-helper_{{ version }}_linux_amd64.zip dest=/root/vault-ssh-helper.zip mode=444
+      - get_url: url=https://releases.hashicorp.com/vault-ssh-helper/{{ version }}/vault-ssh-helper_{{ version }}_linux_amd64.zip dest=/root/vault-ssh-helper.zip mode=444
       - unarchive: src=/root/vault-ssh-helper.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/vault-ssh-helper
       
 - name: AWS CLI
