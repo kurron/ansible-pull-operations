@@ -6,8 +6,15 @@
   tasks:
     - group_by: key={{ ansible_distribution }}
 
+- name: Dump Environment
+  hosts: all
+  become: True
+  tasks:
+      - name: Display all variables/facts known for a host
+        debug: var=hostvars[inventory_hostname]
+
 - name: Nomad
-  hosts: Ubuntu
+  hosts: all
   become: True
   vars:
     nomad_version: 0.4.1
@@ -16,7 +23,7 @@
       - unarchive: src=/root/nomad.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/nomad
 
 - name: Consul
-  hosts: Ubuntu
+  hosts: all
   become: True
   vars:
     consul_version: 0.7.0
@@ -34,16 +41,16 @@
       - unarchive: src=/root/otto.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/otto
 
 - name: Terraform
-  hosts: Ubuntu
+  hosts: all
   become: True
   vars:
-    terraform_version: 0.7.4
+    terraform_version: 0.7.5
   tasks:
       - get_url: url=https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip dest=/root/terraform.zip mode=444
       - unarchive: src=/root/terraform.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/terraform
 
 - name: Packer
-  hosts: Ubuntu
+  hosts: all
   become: True
   vars:
     packer_version: 0.10.2
@@ -51,20 +58,29 @@
       - get_url: url=https://releases.hashicorp.com/packer/{{ packer_version }}/packer_{{ packer_version }}_linux_amd64.zip dest=/root/packer.zip mode=444
       - unarchive: src=/root/packer.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/packer
 
+- name: Vault
+  hosts: all
+  become: True
+  vars:
+    vault_version: 0.6.2
+  tasks:
+      - get_url: url=https://releases.hashicorp.com/vault/{{ vault_version }}/vault{{ vault_version }}_linux_amd64.zip dest=/root/vault.zip mode=444
+      - unarchive: src=/root/vault.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/vault
+
 - name: AWS CLI
-  hosts: nobody
+  hosts: all
   become: True
   tasks:
       - command: pip install --upgrade awscli
 
 - name: AWS ECS CLI
-  hosts: nobody
+  hosts: all
   become: True
   tasks:
       - get_url: url=https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest dest=/usr/local/bin/ecs-cli mode=555
 
 - name: Install Tool Containers
-  hosts: Ubuntu
+  hosts: all
   become: False
   tasks:
       - file: path=/home/vagrant/GitHub owner=vagrant group=vagrant state=directory mode=755
