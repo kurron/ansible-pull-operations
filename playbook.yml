@@ -98,7 +98,7 @@
       - get_url: url=https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest dest=/usr/local/bin/ecs-cli mode=555
 
 - name: Install Tool Containers
-  hosts: all
+  hosts: nobody
   become: False
   tasks:
       - file: path=/home/vagrant/GitHub owner=vagrant group=vagrant state=directory mode=755
