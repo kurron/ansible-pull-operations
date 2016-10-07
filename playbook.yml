@@ -46,7 +46,7 @@
   vars:
     version: 0.2.0
   tasks:
-      - get_url: url=https://releases.hashicorp.com/consul-template/{{ version }}/consul-replicate_{{ version }}_linux_amd64.zip dest=/root/consul-replicate.zip mode=444
+      - get_url: url=https://releases.hashicorp.com/consul-replicate/{{ version }}/consul-replicate_{{ version }}_linux_amd64.zip dest=/root/consul-replicate.zip mode=444
       - unarchive: src=/root/consul-replicate.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/consul-replicate
       
 - name: Terraform
