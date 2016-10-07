@@ -31,15 +31,24 @@
       - get_url: url=https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_amd64.zip dest=/root/consul.zip mode=444
       - unarchive: src=/root/consul.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/consul
 
-- name: Otto
-  hosts: Nobody
+- name: Consul Template
+  hosts: all
   become: True
   vars:
-    otto_version: 0.2.0
+    version: 0.16.0
   tasks:
-      - get_url: url=https://releases.hashicorp.com/otto/{{ otto_version }}/otto_{{ otto_version }}_linux_amd64.zip dest=/root/otto.zip mode=444
-      - unarchive: src=/root/otto.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/otto
+      - get_url: url=https://releases.hashicorp.com/consul-template/{{ version }}/consul-template_{{ version }}_linux_amd64.zip dest=/root/consul-template.zip mode=444
+      - unarchive: src=/root/consul-template.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/consul-template
 
+- name: Consul Replicate
+  hosts: all
+  become: True
+  vars:
+    version: 0.2.0
+  tasks:
+      - get_url: url=https://releases.hashicorp.com/consul-template/{{ version }}/consul-replicate_{{ version }}_linux_amd64.zip dest=/root/consul-replicate.zip mode=444
+      - unarchive: src=/root/consul-replicate.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/consul-replicate
+      
 - name: Terraform
   hosts: all
   become: True
@@ -67,6 +76,15 @@
       - get_url: url=https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_linux_amd64.zip dest=/root/vault.zip mode=444
       - unarchive: src=/root/vault.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/vault
 
+- name: Vault SSH Helper
+  hosts: all
+  become: True
+  vars:
+    version: 0.1.2
+  tasks:
+      - get_url: url=https://releases.hashicorp.com/vault-ssh-heler/{{ version }}/vault-ssh-helper_{{ version }}_linux_amd64.zip dest=/root/vault-ssh-helper.zip mode=444
+      - unarchive: src=/root/vault-ssh-helper.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/vault-ssh-helper
+      
 - name: AWS CLI
   hosts: all
   become: True
@@ -90,35 +108,35 @@
       - file: src=/home/vagrant/GitHub/docker-packer/packer.sh path=/home/vagrant/bin/packer state=absent
 
       - git: repo=https://github.com/kurron/docker-aws-cli.git dest=/home/vagrant/GitHub/docker-aws-cli
-      - file: src=/home/vagrant/GitHub/docker-aws-cli/aws.sh path=/home/vagrant/bin/aws state=link
+      - file: src=/home/vagrant/GitHub/docker-aws-cli/aws.sh path=/home/vagrant/bin/aws state=absent
 
       - git: repo=https://github.com/kurron/docker-aws-ecs-cli.git dest=/home/vagrant/GitHub/docker-aws-ecs-cli
-      - file: src=/home/vagrant/GitHub/docker-aws-ecs-cli/ecs.sh path=/home/vagrant/bin/ecs-cli state=link
+      - file: src=/home/vagrant/GitHub/docker-aws-ecs-cli/ecs.sh path=/home/vagrant/bin/ecs-cli state=absent
 
       - git: repo=https://github.com/kurron/docker-terraform.git dest=/home/vagrant/GitHub/docker-terraform
       - file: src=/home/vagrant/GitHub/docker-terraform/terraform.sh path=/home/vagrant/bin/terraform state=absent
 
       - git: repo=https://github.com/kurron/docker-vault.git dest=/home/vagrant/GitHub/docker-vault
-      - file: src=/home/vagrant/GitHub/docker-vault/vault.sh path=/home/vagrant/bin/vault state=link
+      - file: src=/home/vagrant/GitHub/docker-vault/vault.sh path=/home/vagrant/bin/vault state=absent
 
       - git: repo=https://github.com/kurron/docker-nomad.git dest=/home/vagrant/GitHub/docker-nomad
       - file: src=/home/vagrant/GitHub/docker-nomad/nomad.sh path=/home/vagrant/bin/nomad state=absent
 
       - git: repo=https://github.com/kurron/docker-consul.git dest=/home/vagrant/GitHub/docker-consul
-      - file: src=/home/vagrant/GitHub/docker-consul/consul.sh path=/home/vagrant/bin/consul state=link
+      - file: src=/home/vagrant/GitHub/docker-consul/consul.sh path=/home/vagrant/bin/consul state=absent
 
       - git: repo=https://github.com/kurron/docker-consul-template.git dest=/home/vagrant/GitHub/docker-consul-template
-      - file: src=/home/vagrant/GitHub/docker-consul-template/consul-template.sh path=/home/vagrant/bin/consul-template state=link
+      - file: src=/home/vagrant/GitHub/docker-consul-template/consul-template.sh path=/home/vagrant/bin/consul-template state=absent
 
       - git: repo=https://github.com/kurron/docker-consul-replicate.git dest=/home/vagrant/GitHub/docker-consul-replicate
-      - file: src=/home/vagrant/GitHub/docker-consul-replicate/consul-replicate.sh path=/home/vagrant/bin/consul-replicate state=link
+      - file: src=/home/vagrant/GitHub/docker-consul-replicate/consul-replicate.sh path=/home/vagrant/bin/consul-replicate state=absent
 
       - git: repo=https://github.com/kurron/docker-vault-ssh-helper.git dest=/home/vagrant/GitHub/vault-ssh-helper
-      - file: src=/home/vagrant/GitHub/vault-ssh-helper/vault-ssh-helper.sh path=/home/vagrant/bin/vault-ssh-helper state=link
+      - file: src=/home/vagrant/GitHub/vault-ssh-helper/vault-ssh-helper.sh path=/home/vagrant/bin/vault-ssh-helper state=absent
 
       - file: path=/home/vagrant owner=vagrant group=vagrant recurse=true state=directory
 
-- name: Install Sysdig
+- name: Install Sysdig (Ubuntu)
   hosts: Ubuntu
   become: True
   tasks:
