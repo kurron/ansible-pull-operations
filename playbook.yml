@@ -64,7 +64,7 @@
   vars:
     vault_version: 0.6.2
   tasks:
-      - get_url: url=https://releases.hashicorp.com/vault/{{ vault_version }}/vault{{ vault_version }}_linux_amd64.zip dest=/root/vault.zip mode=444
+      - get_url: url=https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_linux_amd64.zip dest=/root/vault.zip mode=444
       - unarchive: src=/root/vault.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/vault
 
 - name: AWS CLI
