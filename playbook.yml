@@ -7,12 +7,29 @@
     - group_by: key={{ ansible_distribution }}
 
 - name: Dump Environment
-  hosts: all
+  hosts: nobody
   become: True
   tasks:
       - name: Display all variables/facts known for a host
         debug: var=hostvars[inventory_hostname]
 
+- name: Install Ubuntu Packages
+  hosts: Ubuntu
+  become: True
+  tasks:
+      - apt_key: url=https://s3.amazonaws.com/download.draios.com/DRAIOS-GPG-KEY.public state=present
+      - apt_repository: repo='deb http://download.draios.com/stable/deb stable-$(ARCH)/' state=present mode=0644
+      - apt: name=sysdig state=latest update_cache=true
+      - apt: name=ruby-dev state=latest update_cache=true
+      - apt: name=gcc state=latest update_cache=true
+      - apt: name=make state=latest update_cache=true
+
+- name: Install Effing Package Management
+  hosts: all
+  become: True
+  tasks:
+      - gem: name=fpm state=latest
+      
 - name: Nomad
   hosts: all
   become: True
@@ -136,10 +153,3 @@
 
       - file: path=/home/vagrant owner=vagrant group=vagrant recurse=true state=directory
 
-- name: Install Sysdig (Ubuntu)
-  hosts: Ubuntu
-  become: True
-  tasks:
-      - apt_key: url=https://s3.amazonaws.com/download.draios.com/DRAIOS-GPG-KEY.public state=present
-      - apt_repository: repo='deb http://download.draios.com/stable/deb stable-$(ARCH)/' state=present mode=0644
-      - apt: name=sysdig state=latest update_cache=true
