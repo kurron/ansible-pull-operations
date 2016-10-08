@@ -30,14 +30,6 @@
   tasks:
       - gem: name=fpm state=latest
       
-- name: Nomad
-  hosts: all
-  become: True
-  vars:
-    nomad_version: 0.4.1
-  tasks:
-      - get_url: url=https://releases.hashicorp.com/nomad/{{ nomad_version }}/nomad_{{ nomad_version }}_linux_amd64.zip dest=/root/nomad.zip mode=444
-      - unarchive: src=/root/nomad.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/nomad
 
 - name: Consul
   hosts: all
@@ -48,6 +40,15 @@
       - get_url: url=https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_amd64.zip dest=/root/consul.zip mode=444
       - unarchive: src=/root/consul.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/consul
 
+- name: Consul Replicate
+  hosts: all
+  become: True
+  vars:
+    version: 0.2.0
+  tasks:
+      - get_url: url=https://releases.hashicorp.com/consul-replicate/{{ version }}/consul-replicate_{{ version }}_linux_amd64.zip dest=/root/consul-replicate.zip mode=444
+      - unarchive: src=/root/consul-replicate.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/consul-replicate
+      
 - name: Consul Template
   hosts: all
   become: True
@@ -57,14 +58,32 @@
       - get_url: url=https://releases.hashicorp.com/consul-template/{{ version }}/consul-template_{{ version }}_linux_amd64.zip dest=/root/consul-template.zip mode=444
       - unarchive: src=/root/consul-template.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/consul-template
 
-- name: Consul Replicate
+- name: Envconsul
   hosts: all
   become: True
   vars:
-    version: 0.2.0
+    version: 0.6.1
   tasks:
-      - get_url: url=https://releases.hashicorp.com/consul-replicate/{{ version }}/consul-replicate_{{ version }}_linux_amd64.zip dest=/root/consul-replicate.zip mode=444
-      - unarchive: src=/root/consul-replicate.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/consul-replicate
+      - get_url: url=https://releases.hashicorp.com/envconsul/{{ version }}/consul-template_{{ version }}_linux_amd64.zip dest=/root/envconsul.zip mode=444
+      - unarchive: src=/root/envconsul.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/envconsul
+      
+- name: Nomad
+  hosts: all
+  become: True
+  vars:
+    nomad_version: 0.4.1
+  tasks:
+      - get_url: url=https://releases.hashicorp.com/nomad/{{ nomad_version }}/nomad_{{ nomad_version }}_linux_amd64.zip dest=/root/nomad.zip mode=444
+      - unarchive: src=/root/nomad.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/nomad
+
+- name: Packer
+  hosts: all
+  become: True
+  vars:
+    packer_version: 0.10.2
+  tasks:
+      - get_url: url=https://releases.hashicorp.com/packer/{{ packer_version }}/packer_{{ packer_version }}_linux_amd64.zip dest=/root/packer.zip mode=444
+      - unarchive: src=/root/packer.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/packer
       
 - name: Terraform
   hosts: all
@@ -75,14 +94,6 @@
       - get_url: url=https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip dest=/root/terraform.zip mode=444
       - unarchive: src=/root/terraform.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/terraform
 
-- name: Packer
-  hosts: all
-  become: True
-  vars:
-    packer_version: 0.10.2
-  tasks:
-      - get_url: url=https://releases.hashicorp.com/packer/{{ packer_version }}/packer_{{ packer_version }}_linux_amd64.zip dest=/root/packer.zip mode=444
-      - unarchive: src=/root/packer.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/packer
 
 - name: Vault
   hosts: all
