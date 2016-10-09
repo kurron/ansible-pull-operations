@@ -64,7 +64,7 @@
   vars:
     version: 0.6.1
   tasks:
-      - get_url: url=https://releases.hashicorp.com/envconsul/{{ version }}/consul-template_{{ version }}_linux_amd64.zip dest=/root/envconsul.zip mode=444
+      - get_url: url=https://releases.hashicorp.com/envconsul/{{ version }}/envconsul_{{ version }}_linux_amd64.zip dest=/root/envconsul.zip mode=444
       - unarchive: src=/root/envconsul.zip dest=/usr/local/bin copy=no owner=root group=root mode=555 creates=/usr/local/bin/envconsul
       
 - name: Nomad
