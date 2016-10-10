@@ -40,7 +40,7 @@
   hosts: all
   become: True
   tasks:
-      - gem: name=fpm state=latest
+      - gem: name=fpm user_install=no state=latest
       
 
 - name: Consul
