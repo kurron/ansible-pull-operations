@@ -24,6 +24,17 @@
       - apt: name=gcc state=latest update_cache=true
       - apt: name=make state=latest update_cache=true
 
+- name: Install CentOS Packages
+  hosts: CentOS
+  become: True
+  tasks:
+      - yum_repository: name=sysdig  baseurl: http://download.draios.com/stable/rpm/draios.repo gpgkey=https://s3.amazonaws.com/download.draios.com/DRAIOS-GPG-KEY.public
+      - yum: name=sysdig state=latest
+      - yum: name=ruby-devel state=latest
+      - yum: name=gcc state=latest
+      - yum: name=make state=latest
+      - yum: name=rpm-build state=latest
+
 - name: Install Effing Package Management
   hosts: all
   become: True
