@@ -28,8 +28,9 @@
   hosts: CentOS
   become: True
   tasks:
-      - yum_repository: name=sysdig description=sysdig baseurl=http://download.draios.com/stable/rpm/draios.repo gpgkey=https://s3.amazonaws.com/download.draios.com/DRAIOS-GPG-KEY.public
-      - yum: name=sysdig state=latest
+# TODO: figure out why we can't access their repository  
+#     - yum_repository: name=sysdig description=sysdig baseurl=http://download.draios.com/stable/rpm/draios.repo gpgkey=https://s3.amazonaws.com/download.draios.com/DRAIOS-GPG-KEY.public
+#     - yum: name=sysdig state=latest
       - yum: name=ruby-devel state=latest
       - yum: name=gcc state=latest
       - yum: name=make state=latest
