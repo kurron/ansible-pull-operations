@@ -24,6 +24,13 @@
       - apt: name=gcc state=latest update_cache=true
       - apt: name=make state=latest update_cache=true
 
+- name: Install Sysdig
+  hosts: CentOS
+  become: True
+  tasks:
+      - get_url: url=https://s3.amazonaws.com/download.draios.com/stable/install-sysdig dest=/root/install-sysdig mode=555
+      - shell: /root/install-sysdig
+
 - name: Install CentOS Packages
   hosts: CentOS
   become: True
