@@ -17,15 +17,13 @@
   hosts: Ubuntu
   become: True
   tasks:
-      - apt_key: url=https://s3.amazonaws.com/download.draios.com/DRAIOS-GPG-KEY.public state=present
-      - apt_repository: repo='deb http://download.draios.com/stable/deb stable-$(ARCH)/' state=present mode=0644
       - apt: name=sysdig state=latest update_cache=true
       - apt: name=ruby-dev state=latest update_cache=true
       - apt: name=gcc state=latest update_cache=true
       - apt: name=make state=latest update_cache=true
 
 - name: Install Sysdig
-  hosts: CentOS
+  hosts: all
   become: True
   tasks:
       - get_url: url=https://s3.amazonaws.com/download.draios.com/stable/install-sysdig dest=/root/install-sysdig mode=555
